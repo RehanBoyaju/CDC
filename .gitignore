@@ -1,0 +1,47 @@
+# Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Libraries
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.lai
+*.la
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug files
+*.pdb
+*.dwo
+
+# Build folders
+/build/
+Debug/
+Release/
+
+# IDEs
+.vscode/
+.idea/
+*.user
+*.suo
+*.vcxproj*
+
+# Editor backup files
+*~
+*.swp
+
+# Fortran
+*.mod
+*.smod
