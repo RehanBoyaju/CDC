@@ -176,22 +176,22 @@ void evaluateLL1ParseTable() {
 }
 
 string modifyInput(string input) {
-    size_t pos = 0;
+    // size_t pos = 0;
     
-    while ((pos = input.find("ε", pos)) != string::npos) {
-        input.replace(pos, string("ε").length(), "#");
-        pos += 1;
-    }
+    // while ((pos = input.find("ε", pos)) != string::npos) {
+    //     input.replace(pos, string("ε").length(), "#");
+    //     pos += 1;
+    // }
     
     return input;
 }
 
 string modifyOutput(string output) {
-    size_t pos = 0;
+    // size_t pos = 0;
     
-    while ((pos = output.find("#", pos)) != string::npos) {
-        output.replace(pos, string("#").length(), "ε");
-    }
+    // while ((pos = output.find("#", pos)) != string::npos) {
+    //     output.replace(pos, string("#").length(), "ε");
+    // }
     
     return output;
 }
@@ -246,44 +246,44 @@ int main() {
     evaluateLL1ParseTable();
     
     // Check if grammar is LL(1)
-    bool isLL1 = true;
-    for (auto entry : parseTable) {
-        if (entry.second.size() > 1) {
-            isLL1 = false;
-            break;
-        }
-    }
+    // bool isLL1 = true;
+    // for (auto entry : parseTable) {
+    //     if (entry.second.size() > 1) {
+    //         isLL1 = false;
+    //         break;
+    //     }
+    // }
     
-    if (!isLL1) {
-        cout << "\nWARNING: Grammar is NOT LL(1) (multiple entries in parse table)\n";
-    }
+    // if (!isLL1) {
+    //     cout << "\nWARNING: Grammar is NOT LL(1) (multiple entries in parse table)\n";
+    // }
     
-    // Display production mapping
-    cout << "\nProduction Mapping:\n";
-    int idx = 1;
-    for (auto p : grammar) {
-        for (string prod : p.second) {
-            cout << idx++ << ": " << p.first << " -> " << modifyOutput(prod) << "\n";
-        }
-    }
+    // // Display production mapping
+    // cout << "\nProduction Mapping:\n";
+    // int idx = 1;
+    // for (auto p : grammar) {
+    //     for (string prod : p.second) {
+    //         cout << idx++ << ": " << p.first << " -> " << modifyOutput(prod) << "\n";
+    //     }
+    // }
     
-    // Display FIRST sets
-    cout << "\nFIRST sets:\n";
-    for (auto p : grammar) {
-        cout << "FIRST(" << p.first << ") = { ";
-        for (char s : firstSet[p.first])
-            cout << modifyOutput(string(1, s)) << " ";
-        cout << "}\n";
-    }
+    // // Display FIRST sets
+    // cout << "\nFIRST sets:\n";
+    // for (auto p : grammar) {
+    //     cout << "FIRST(" << p.first << ") = { ";
+    //     for (char s : firstSet[p.first])
+    //         cout << modifyOutput(string(1, s)) << " ";
+    //     cout << "}\n";
+    // }
     
-    // Display FOLLOW sets
-    cout << "\nFOLLOW sets:\n";
-    for (auto p : grammar) {
-        cout << "FOLLOW(" << p.first << ") = { ";
-        for (char s : followSet[p.first])
-            cout << s << " ";
-        cout << "}\n";
-    }
+    // // Display FOLLOW sets
+    // cout << "\nFOLLOW sets:\n";
+    // for (auto p : grammar) {
+    //     cout << "FOLLOW(" << p.first << ") = { ";
+    //     for (char s : followSet[p.first])
+    //         cout << s << " ";
+    //     cout << "}\n";
+    // }
     
     // Display LL(1) Parsing Table
     cout << "\nLL(1) Parsing Table:\n";

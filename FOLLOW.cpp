@@ -8,7 +8,7 @@ map<char, vector<string>> grammar;
 set<char> terminals;
 map<char, set<char>> followSet;
 map<char, set<char>> firstSet;
-map<pair<char, char>, set<int>> parseTable;
+// map<pair<char, char>, set<int>> parseTable;
 
 bool isTerminal(char c) {
     return !(c >= 'A' && c <= 'Z');
@@ -146,22 +146,22 @@ bool findFollowSets() {
     return isChanged;
 }
 string modifyInput(string input) {
-    size_t pos = 0;
+    // size_t pos = 0;
     
-    while ((pos = input.find("ε", pos)) != string::npos) {
-        input.replace(pos, string("ε").length(), "#");
-        pos += 1;
-    }
+    // while ((pos = input.find("ε", pos)) != string::npos) {
+    //     input.replace(pos, string("ε").length(), "#");
+    //     pos += 1;
+    // }
     
     return input;
 }
 
 string modifyOutput(string output) {
-    size_t pos = 0;
+    // size_t pos = 0;
     
-    while ((pos = output.find("#", pos)) != string::npos) {
-        output.replace(pos, string("#").length(), "ε");
-    }
+    // while ((pos = output.find("#", pos)) != string::npos) {
+    //     output.replace(pos, string("#").length(), "ε");
+    // }
     
     return output;
 }
@@ -178,14 +178,12 @@ int main() {
         cout << "Enter the production " << i + 1 << ": ";
         string production;
         getline(cin, production);
-        production = modifyInput(production);
+        // production = modifyInput(production);
         
         char lhs = production[0];
         string rhs = production.substr(3);
         
-        if (i == 0) {
-            startSymbol = lhs;
-        }
+         
         
         string temp = "";
         for (char c : rhs) {
