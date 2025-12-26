@@ -51,7 +51,7 @@ int main() {
     cout << "Enter a token: ";
     cin >> token;
 
-    if (isIdentifier(token))
+    if (isIdentifier(token))    
         cout << "Valid Identifier" << endl;
     else if (isConstant(token))
         cout << "Valid Constant" << endl;

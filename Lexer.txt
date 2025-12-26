@@ -1,0 +1,77 @@
+WAP to implement lexical analyzer using a LEX tool
+
+##can use wsl cmd to open ubuntu terminal in cmd
+
+1.First install wsl in terminal in elevated cmd
+    wsl --install
+
+2.After installation of wsl now install flex and gcc compiler
+    sudo apt update
+    sudo apt install flex gcc
+
+3.Now create a lexer file and paste the code there
+    nano lexer.l
+
+%{
+#include <stdio.h>
+%}
+
+/* Definitions */
+KEYWORD     int|float|char|double|if|else|while|for|return
+IDENTIFIER  [a-zA-Z_][a-zA-Z0-9_]*
+NUMBER      [0-9]+(\.[0-9]+)?
+OPERATOR    \+|\-|\*|\/|=|==|<=|>=|<|>
+SEPARATOR   [;,\(\)\{\}]
+
+%%
+
+{KEYWORD}      { printf("KEYWORD: %s\n", yytext); }
+{IDENTIFIER}   { printf("IDENTIFIER: %s\n", yytext); }
+{NUMBER}       { printf("NUMBER: %s\n", yytext); }
+{OPERATOR}     { printf("OPERATOR: %s\n", yytext); }
+{SEPARATOR}    { printf("SEPARATOR: %s\n", yytext); }
+
+[ \t\n]+       ;   /* Ignore whitespace */
+
+.              { printf("UNKNOWN: %s\n", yytext); }
+
+%%
+
+int main() {
+    yylex();
+    return 0;
+}
+
+int yywrap() {
+    return 1;
+}
+
+Paste this by either right click or ctrl shift v
+
+4. Now save this file and exit with
+    Ctrl O
+    Enter
+    Ctrl X
+
+5.Generate the C file from LEX
+    lex lexer.l
+
+    This creates lex.yy.c
+
+6.Compile to C file
+    gcc lex.yy.c -o lexer -ll
+
+    this compiles the lex.yy.c file using gcc compiler and outputs as lexer executable default is (a.out), ll links the lex libraries
+
+7. Now run the lexer
+    ./lexer
+
+8. input tokens as int a = 10;
+
+9. Now it will output tokens
+
+10. Give EOF at end
+    Ctrl + D
+
+
+

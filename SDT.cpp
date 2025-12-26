@@ -1,49 +1,84 @@
 #include <iostream>
-#include <stack>
 #include <string>
-
+#include <cctype>
 using namespace std;
 
-// Super simple tree node
-struct Node {
-    string value;
-    Node(string v) : value(v) {}
+class SDT {
+private:
+    string input;
+    int pos;
+    
+    // F -> digit { F.val = digit.val }
+    int factor() {
+        // cout << "factor() called\n";
+        if (pos < input.length() && isdigit(input[pos])) {
+            int digit_val = input[pos] - '0';
+            cout << "Semantic Action: F.val = " << digit_val << endl;
+            pos++;
+            return digit_val;
+        }
+        return 0;
+    }
+    
+    // T -> F * T { T.val = F.val * T1.val } | F { T.val = F.val }
+    int term() {
+        // cout << "term() called\n";
+        int F_val = factor();
+        
+        if (pos < input.length() && input[pos] == '*') {
+            pos++;
+            int T1_val = term();
+            int T_val = F_val * T1_val;
+            cout << "Semantic Action: T.val = " << F_val << " * " << T1_val << " = " << T_val << endl;
+            return T_val;
+        }
+        
+        cout << "Semantic Action: T.val = F.val = " << F_val << endl;
+        return F_val;
+    }
+    
+    // E -> T + E { E.val = T.val + E1.val } | T { E.val = T.val }
+    int expr() {
+        // cout << "expr() called\n";
+        int T_val = term();
+        
+        if (pos < input.length() && input[pos] == '+') {
+            pos++;
+            int E1_val = expr();
+            int E_val = T_val + E1_val;
+            cout << "Semantic Action: E.val = " << T_val << " + " << E1_val << " = " << E_val << endl;
+            return E_val;
+        }
+        
+        cout << "Semantic Action: E.val = T.val = " << T_val << endl;
+        return T_val;
+    }
+    
+public:
+    SDT(string s) : input(s), pos(0) {}
+    
+    void translate() {
+        cout << "Grammar with Semantic Actions:\n";
+        cout << "E -> T + E  { E.val = T.val + E1.val }\n";
+        cout << "E -> T      { E.val = T.val }\n";
+        cout << "T -> F * T  { T.val = F.val * T1.val }\n";
+        cout << "T -> F      { T.val = F.val }\n";
+        cout << "F -> digit  { F.val = digit.val }\n\n";
+        
+        cout << "Input Expression: " << input << endl;
+        cout << "Parsing and Evaluating...\n\n";
+        int result = expr();
+        cout << "\nResult: " << result << endl;
+    }
 };
 
 int main() {
-    stack<Node*> stack;
+    // cout << "=== SYNTAX DIRECTED TRANSLATION ===\n\n";
     
-    // Example: Process "3 + 4 * 2"
-    cout << "Processing: 3 + 4 * 2\n\n";
+    string expression = "2+3*4";
     
-    // Step 1: Push numbers
-    stack.push(new Node("3"));
-    cout << "Pushed: 3\n";
-    
-    stack.push(new Node("4"));
-    cout << "Pushed: 4\n";
-    
-    stack.push(new Node("2"));
-    cout << "Pushed: 2\n";
-    
-    // Step 2: Process multiplication (4 * 2)
-    Node* right = stack.top(); stack.pop();
-    Node* left = stack.top(); stack.pop();
-    Node* mul = new Node("*");
-    cout << "\nCreated * node (4 * 2)\n";
-    
-    // Step 3: Process addition (3 + result)
-    Node* num3 = stack.top(); stack.pop();
-    Node* add = new Node("+");
-    cout << "Created + node (3 + result)\n";
-    
-    // Display tree structure
-    cout << "\nSyntax Tree:\n";
-    cout << "    +\n";
-    cout << "   / \\\n";
-    cout << "  3   *\n";
-    cout << "     / \\\n";
-    cout << "    4   2\n";
+    SDT translator(expression);
+    translator.translate();
     
     return 0;
 }
