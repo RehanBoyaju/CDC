@@ -146,22 +146,22 @@ bool findFollowSets() {
     return isChanged;
 }
 string modifyInput(string input) {
-    // size_t pos = 0;
+    size_t pos = 0;
     
-    // while ((pos = input.find("ε", pos)) != string::npos) {
-    //     input.replace(pos, string("ε").length(), "#");
-    //     pos += 1;
-    // }
+    while ((pos = input.find("ε", pos)) != string::npos) {
+        input.replace(pos, string("ε").length(), "#");
+        pos += 1;
+    }
     
     return input;
 }
 
 string modifyOutput(string output) {
-    // size_t pos = 0;
+    size_t pos = 0;
     
-    // while ((pos = output.find("#", pos)) != string::npos) {
-    //     output.replace(pos, string("#").length(), "ε");
-    // }
+    while ((pos = output.find("#", pos)) != string::npos) {
+        output.replace(pos, string("#").length(), "ε");
+    }
     
     return output;
 }

@@ -77,18 +77,18 @@ string modifyInput(string input) {
 }
 
 string modifyOutput(string output) {
-    // size_t pos = 0;
+    size_t pos = 0;
     
-    // while ((pos = output.find("#", pos)) != string::npos) {
-    //     output.replace(pos, string("#").length(), "ε");
-    // }
+    while ((pos = output.find("#", pos)) != string::npos) {
+        output.replace(pos, string("#").length(), "ε");
+    }
     
     return output;
 }
 
 int main() {
     int n;
-    // char startSymbol;
+    char startSymbol;
     
     cout << "Enter the number of productions: ";
     cin >> n;
@@ -98,14 +98,11 @@ int main() {
         cout << "Enter the production " << i + 1 << ": ";
         string production;
         getline(cin, production);
-        // production = modifyInput(production);
+        production = modifyInput(production);
         
         char lhs = production[0];
         string rhs = production.substr(3);
         
-        // if (i == 0) {
-        //     startSymbol = lhs;
-        // }
         
         string temp = "";
         for (char c : rhs) {
@@ -123,7 +120,7 @@ int main() {
     while (findFirstSets());
 
     // Display FIRST sets
-    // cout << "\nFIRST sets:\n";
+    cout << "\nFIRST sets:\n";
     for (auto p : grammar) {
         cout << "\nFIRST(" << p.first << ") = { ";
         for (char s : firstSet[p.first])
